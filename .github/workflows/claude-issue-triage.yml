@@ -63,6 +63,10 @@ jobs:
                  para implementarla después.
                - Una nota final indicando que es un diagnóstico automático
                  generado por Claude y puede requerir revisión humana.
+               El comentario debe estar escrito en formato Markdown válido y
+               bien interpretable por GitHub (encabezados, listas, negritas y
+               bloques de código con ``` cuando cites nombres de funciones o
+               fragmentos de código).
 
             Idempotencia: si este evento es una edición (`edited`) y ya existe un
             comentario previo de diagnóstico automático de Claude en el issue, no
