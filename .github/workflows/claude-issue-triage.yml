@@ -1,0 +1,71 @@
+name: Claude Issue Triage
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude Issue Triage
+        id: claude-triage
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+
+          claude_args: |
+            --allowed-tools "Bash(gh issue view:*),Bash(gh issue edit:*),Bash(gh issue comment:*),Bash(gh label list:*),Read,Grep,Glob"
+
+          prompt: |
+            Eres el triador automático de issues de este repositorio: un Tetris
+            vanilla implementado en `index.html`, `style.css` y `game.js` (ver
+            `CLAUDE.md` para la arquitectura completa: modelo de tablero, piezas,
+            colisiones, wall kicks, loop de juego, scoring, renderizado e input).
+
+            Analiza el issue #${{ github.event.issue.number }} de este repositorio
+            (`${{ github.repository }}`).
+
+            Pasos:
+            1. Lee el issue con `gh issue view ${{ github.event.issue.number }}
+               --comments`.
+            2. Lista los labels disponibles con `gh label list` y elige SOLO entre
+               los ya existentes los que correspondan (por ejemplo: bug,
+               enhancement, question, documentation, duplicate, invalid, wontfix,
+               help wanted, good first issue). No inventes ni crees labels nuevos.
+               Aplica los que correspondan con:
+               `gh issue edit ${{ github.event.issue.number }} --add-label "..."`.
+               No elimines labels que ya tenga el issue salvo que sean claramente
+               incorrectos.
+            3. Revisa el código relevante del repo (`game.js`, `index.html`,
+               `style.css`) para entender si el issue aplica a una función o zona
+               concreta (por ejemplo `collide`, `tryRotate`, `clearLines`, `merge`,
+               `spawn`, `loop`, `draw`, `drawNext`, el listener de `keydown`, o los
+               tunables del inicio de `game.js`).
+            4. Publica UN comentario de diagnóstico con
+               `gh issue comment ${{ github.event.issue.number }} --body "..."`
+               que incluya:
+               - Resumen breve del problema o petición.
+               - Clasificación (bug / mejora / duda / documentación / otro).
+               - Área probable del código afectada, referenciando funciones y
+                 archivos reales del proyecto.
+               - Un planteamiento sugerido de solución o próximos pasos, útil
+                 para implementarla después.
+               - Una nota final indicando que es un diagnóstico automático
+                 generado por Claude y puede requerir revisión humana.
+
+            Idempotencia: si este evento es una edición (`edited`) y ya existe un
+            comentario previo de diagnóstico automático de Claude en el issue, no
+            dupliques información innecesaria: publica un nuevo comentario breve
+            indicando que es una revisión tras la edición, actualizando solo lo
+            que haya cambiado (por ejemplo, nuevos labels si el alcance cambió).
