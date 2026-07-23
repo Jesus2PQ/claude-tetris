@@ -264,3 +264,137 @@ kbd {
 #restart-btn:hover {
   background: var(--accent-hover);
 }
+
+.overlay-heading {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: var(--accent);
+}
+
+.secondary-btn {
+  margin-top: 4px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.secondary-btn:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+/* ---- New highscore form ---- */
+.new-highscore-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 16px;
+}
+
+.new-highscore-form.hidden {
+  display: none;
+}
+
+.new-highscore-form label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.new-highscore-form input {
+  width: 160px;
+  background: var(--kbd-bg);
+  border: 1px solid var(--kbd-border);
+  border-radius: 4px;
+  color: var(--fg);
+  font-size: 14px;
+  padding: 6px 10px;
+  text-align: center;
+}
+
+.new-highscore-form input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.new-highscore-form button {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+
+.new-highscore-form button:hover {
+  background: var(--accent-hover);
+}
+
+/* ---- Highscore table ---- */
+.highscore-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.highscore-empty {
+  font-size: 12px;
+  color: var(--muted);
+  padding: 8px 0;
+}
+
+table.highscore-list {
+  border-collapse: collapse;
+  font-size: 12px;
+  min-width: 260px;
+}
+
+table.highscore-list th,
+table.highscore-list td {
+  padding: 4px 10px;
+  text-align: left;
+  color: var(--fg);
+}
+
+table.highscore-list th {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 1px;
+  border-bottom: 1px solid var(--border);
+}
+
+table.highscore-list td:first-child,
+table.highscore-list th:first-child {
+  text-align: center;
+}
+
+table.highscore-list tr.highscore-current td {
+  color: var(--accent);
+  font-weight: 700;
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+.best-stats {
+  display: flex;
+  gap: 16px;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
