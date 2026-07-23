@@ -73,6 +73,39 @@ body {
   text-shadow: 0 0 20px rgba(122, 162, 247, 0.5);
 }
 
+/* ---- Skin select ---- */
+.skin-select {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.skin-select-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.skin-select select {
+  background: var(--kbd-bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s, background 0.2s, color 0.2s;
+}
+
+.skin-select select:hover,
+.skin-select select:focus {
+  border-color: var(--accent);
+}
+
 /* ---- Theme switch ---- */
 .theme-switch {
   position: relative;
